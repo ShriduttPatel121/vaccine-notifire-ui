@@ -5,8 +5,7 @@ import { useField } from 'formik'
 
 const AutoComplete = React.forwardRef((props, ref) => {
     const [field, meta] = useField(props);
-    const errorText = meta.error && meta.touched ? meta.error : "";
-    const { options, name, type, label, onChange, inputValue } = props;
+    const { options, name, type, label, onChange, inputValue, disabled } = props;
     return (
         <>
             <Autocomplete
@@ -14,6 +13,7 @@ const AutoComplete = React.forwardRef((props, ref) => {
                 getOptionLabel={(option) => option.name}
                 onChange={onChange}
                 inputValue={inputValue}
+                disabled={disabled}
                 renderInput={(params) => {
                     return <TextField label={label} type={type || 'text'} {...params} name={name} {...field} error={meta.error && meta.touched} variant="outlined" />
                 }}
@@ -26,15 +26,3 @@ const AutoComplete = React.forwardRef((props, ref) => {
 });
 
 export default AutoComplete;
-{/* <Autocomplete
-                                options={districts}
-                                getOptionLabel={(option) => option.district_name}
-                                onChange={(e, value) => {
-                                    console.log(value);
-                                    props.setFieldValue("district", value?.district_name)
-                                }}
-                                ref={districtInputRef}
-                                renderInput={(params) => (
-                                    <Field component={TextField} {...params} label="District" name="district" variant="outlined" />
-                                )}
-                            /> */}
