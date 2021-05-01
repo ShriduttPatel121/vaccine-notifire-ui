@@ -14,6 +14,15 @@ const AutoComplete = React.forwardRef((props, ref) => {
                 onChange={onChange}
                 inputValue={inputValue}
                 disabled={disabled}
+                //getOptionSelected={(option, value) => {
+                    //console.log(option);
+                    //console.log(value);
+                //    if (inputValue === "") {
+                //        return false;
+                //    }
+                //    console.log((option.id === value.id)+ ' ' + name);
+                //    return option.id === value.id;
+                //}}
                 renderInput={(params) => {
                     return <TextField label={label} type={type || 'text'} {...params} name={name} {...field} error={meta.error && meta.touched} variant="outlined" />
                 }}

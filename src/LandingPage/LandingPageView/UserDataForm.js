@@ -140,13 +140,16 @@ const UserDataForm =  (props) => {
                                     console.log(value);
                                     fetchDistricts(value?.id)
                                     setDistrictDisabled(false);
-                                    props.setFieldValue("state", value?.name)
+                                    
                                     if (!value) {
                                         setSelectedDistrict("");
                                         setSelectedState("");
                                         setDistrictDisabled(true);
+                                        props.setFieldValue("district", "");
+                                        props.setFieldValue("state", "")
                                     } else{
                                         setSelectedState(value?.name);
+                                        props.setFieldValue("state", value?.name);
                                     }
                                 }}
                             />
