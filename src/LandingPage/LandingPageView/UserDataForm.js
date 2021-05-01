@@ -40,8 +40,9 @@ const useStyles = makeStyles({
   });
 const UserDataForm =  (props) => {
     const classes = useStyles();
-    const [states, setStates] = useState([]);
-    const [districts, setDistricts] = useState([]);
+    const [states, setStates] = useState([{id: null, name: ""}]);
+    const [districts, setDistricts] = useState([{id: null, name: ""}]);
+    const [districtDisabled, setDistrictDisabled] = useState(true);
     const [selectedDistrict, setSelectedDistrict] = useState("");
     const [selectedState, setSelectedState] = useState("");
 
@@ -134,26 +135,35 @@ const UserDataForm =  (props) => {
                                 options={states}
                                 label="State"
                                 inputValue={selectedState}
+                                disabled={false}
                                 onChange={(e, value) => {
                                     console.log(value);
                                     fetchDistricts(value?.id)
-                                    setSelectedState(value?.name);
+                                    setDistrictDisabled(false);
                                     props.setFieldValue("state", value?.name)
                                     if (!value) {
                                         setSelectedDistrict("");
                                         setSelectedState("");
+                                        setDistrictDisabled(true);
+                                    } else{
+                                        setSelectedState(value?.name);
                                     }
                                 }}
                             />
                             <AutoComplete
                                 name="district"
                                 options={districts}
+                                disabled={districtDisabled}
                                 label="District"
                                 inputValue={selectedDistrict}
                                 onChange={(e, value) => {
                                     console.log(value);
                                     props.setFieldValue("district", value?.name)
-                                    setSelectedDistrict(value?.name);
+                                    if (value !== null) {
+                                        setSelectedDistrict(value?.name);
+                                    } else {
+                                        setSelectedDistrict("");
+                                    }
                                 }}
                             />
                             <TextInput name="pincode" label="Pincode" variant="outlined" />
