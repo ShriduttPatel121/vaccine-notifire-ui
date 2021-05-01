@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Typography,
     Container,
@@ -6,12 +6,10 @@ import {
     Button,
     Divider,
     CircularProgress,
-    TextField
   } from "@material-ui/core";
-import { Formik, Field } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import { makeStyles } from "@material-ui/styles";
-import { Autocomplete } from "@material-ui/lab";
 
 import TextInput from "../../Shared/UIElements/Input/TextInput";
 import { useHttpClient } from '../../Shared/hooks/http-hook';
