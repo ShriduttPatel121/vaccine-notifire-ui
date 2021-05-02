@@ -8,25 +8,18 @@ const AutoComplete = React.forwardRef((props, ref) => {
     const { options, name, type, label, onChange, inputValue, disabled } = props;
     return (
         <>
+            <div className="Input">
             <Autocomplete
                 options={options}
                 getOptionLabel={(option) => option.name}
                 onChange={onChange}
                 inputValue={inputValue}
                 disabled={disabled}
-                //getOptionSelected={(option, value) => {
-                    //console.log(option);
-                    //console.log(value);
-                //    if (inputValue === "") {
-                //        return false;
-                //    }
-                //    console.log((option.id === value.id)+ ' ' + name);
-                //    return option.id === value.id;
-                //}}
                 renderInput={(params) => {
                     return <TextField label={label} type={type || 'text'} {...params} name={name} {...field} error={meta.error && meta.touched} variant="outlined" />
                 }}
             />
+            </div>
             {
                 (meta.error && meta.touched) ? <span style={{color: 'red'}}>{meta.error}</span> : null
             }

@@ -4,8 +4,13 @@ import {
     Container,
     Card,
     Button,
+    Box,
     Divider,
     CircularProgress,
+    Radio,
+    RadioGroup,
+    FormControlLabel,
+    FormLabel
   } from "@material-ui/core";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -20,12 +25,12 @@ const useStyles = makeStyles({
       alignItems: "center",
       justifyContent: "space-around",
       display: "flex",
-      width: "70%",
+      width: "100%",
       padding: "0.5rem",
       flexWrap: "wrap",
       height: "100%",
       "@media(max-width : 52rem)": {
-        width: "80%",
+        width: "100%",
       },
     },
     formContainer: {
@@ -76,7 +81,7 @@ const UserDataForm =  (props) => {
                     state: "",
                     district: "",
                     pincode: "",
-                    //minAge: 18
+                    ageGroup: 18
                 }
             }
             validationSchema={
@@ -89,6 +94,10 @@ const UserDataForm =  (props) => {
             }
             onSubmit={ (value, { setSubmitting, resetForm }) => {
                 console.log(value);
+                resetForm();
+                setSelectedState("");
+                setSelectedDistrict("");
+                setDistricts([{id: null, name: ""}]);
             }}
         >
             {
@@ -96,40 +105,6 @@ const UserDataForm =  (props) => {
                     <Container className={classes.root} maxWidth="md">
                         <Card className={classes.formContainer}>
                         <form onSubmit={props.handleSubmit}>
-                            {/* <Autocomplete
-                                options={states}
-                                getOptionLabel={(option) => option.name}
-                                style={{ width: 300 }}
-                                onChange={(e, value) => {
-                                    console.log(value);
-                                    props.setFieldValue("state", value?.name || "");
-                                    if (value) {
-                                        fetchDistricts(value.id);
-                                    } else {
-                                        console.log('in else');
-                                        props.setFieldValue("district", "")
-                                        districtInputRef.current.value = null;
-                                        console.log(districtInputRef.current);
-                                        setDistricts([]);
-                                        setSelectedDistrict(null);
-                                    }
-                                }}
-                                renderInput={(params) => (
-                                    <Field inputProps component={TextField} {...params} label="State" name="state" variant="outlined" />
-                                )}
-                            />
-                            <Autocomplete
-                                options={districts}
-                                getOptionLabel={(option) => option.name}
-                                onChange={(e, value) => {
-                                    console.log(value);
-                                    props.setFieldValue("district", value?.name)
-                                }}
-                                
-                                renderInput={(params) => (
-                                    <Field component={TextField} innerRef={districtInputRef} {...params} label="District" name="district" variant="outlined" />
-                                )}
-                            /> */}
                             <AutoComplete
                                 name="state"
                                 options={states}
@@ -171,6 +146,25 @@ const UserDataForm =  (props) => {
                             />
                             <TextInput name="pincode" label="Pincode" variant="outlined" />
                             <TextInput name="name" label="Name" variant="outlined" />
+                            <FormLabel component="legend" style={{textAlign: 'initial', paddingLeft: '1rem', paddingTop: '0.5rem'}}>Age Group</FormLabel>
+                            <RadioGroup aria-label="age-group" style={{flexDirection: 'row', paddingLeft: '1rem'}} value={props.values.ageGroup} onChange={
+                                (e) => {
+                                    props.setFieldValue("ageGroup", +(e.target.value));
+                                }
+                            }>
+                                <FormControlLabel value={18} control={<Radio />} label="18+" />
+                                <FormControlLabel value={45} control={<Radio />} label="45+" />
+                            </RadioGroup>
+                            <Box display="flex" width="100%" justifyContent="space-around">
+                            <Button
+                                type="button"
+                                size="large"
+                                variant="outlined"
+                                color="primary"
+                                className={classes.sybmitBtn}
+                            >
+                                Notify me
+                            </Button>
                             <Button
                                 type="submit"
                                 size="large"
@@ -179,8 +173,9 @@ const UserDataForm =  (props) => {
                                 color="primary"
                                 className={classes.sybmitBtn}
                             >
-                                Submit
+                                Search
                             </Button>
+                            </Box>
                         </form>
                             
                         </Card>
