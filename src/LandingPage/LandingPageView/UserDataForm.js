@@ -19,7 +19,8 @@ import { useHistory } from 'react-router-dom';
 
 import TextInput from "../../Shared/UIElements/Input/TextInput";
 import { useHttpClient } from '../../Shared/hooks/http-hook';
-import AutoComplete from '../../Shared/UIElements/AutoComplete/AutoComplete'
+import AutoComplete from '../../Shared/UIElements/AutoComplete/AutoComplete';
+import Modal from '../../Shared/UIElements/Modal/Modal';
 
 const useStyles = makeStyles({
     root: {
@@ -53,6 +54,7 @@ const UserDataForm =  (props) => {
     const [selectedState, setSelectedState] = useState("");
     const [stateId, setStateId] = useState();
     const [districtId, setDistrictId] = useState();
+    const [notifyModalVisibility, setNotifyModalVisibility] = useState(false);
     const history = useHistory();
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -73,6 +75,18 @@ const UserDataForm =  (props) => {
     const fetchDistricts = async (state_id) => {
         const receivedDistricts = await sendRequest(`https://cdn-api.co-vin.in/api/v2/admin/location/districts/${state_id}`);
         setDistricts(receivedDistricts.districts.map((dis) => ({id: dis.district_id, name: dis.district_name})));
+    }
+
+    const registerEmailWithUserData = (userData, email) => {
+
+    }
+
+    const closeNotifyModal = () => {
+        setNotifyModalVisibility(false);
+    }
+
+    const openNotifyModal = () => {
+        setNotifyModalVisibility(true);
     }
 
     return(
@@ -110,6 +124,16 @@ const UserDataForm =  (props) => {
             {
                 (props) => (
                     <Container className={classes.root} maxWidth="md">
+                    <Modal
+                        open={notifyModalVisibility}
+                        title="Enter your email to get email notification"
+                        onCloseModal={closeNotifyModal}
+                        stateId={stateId}
+                        districtId={districtId}
+                        userData={props.values}
+                    >
+
+                    </Modal>
                         <Card className={classes.formContainer}>
                         <form onSubmit={props.handleSubmit}>
                             <AutoComplete
@@ -175,7 +199,9 @@ const UserDataForm =  (props) => {
                                 size="large"
                                 variant="outlined"
                                 color="primary"
+                                disabled={!(props.isValid && props.dirty)}
                                 className={classes.sybmitBtn}
+                                onClick={openNotifyModal}
                             >
                                 Notify me
                             </Button>
