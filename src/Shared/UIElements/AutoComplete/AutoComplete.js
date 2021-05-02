@@ -5,18 +5,20 @@ import { useField } from 'formik'
 
 const AutoComplete = React.forwardRef((props, ref) => {
     const [field, meta] = useField(props);
-    const { options, name, type, label, onChange, inputValue, disabled } = props;
+    const { options, name, type, label, onChange, disabled } = props;
+
     return (
         <>
             <div className="Input">
             <Autocomplete
                 options={options}
-                getOptionLabel={(option) => option.name}
+                getOptionLabel={(option) => option.name || ""}
                 onChange={onChange}
-                inputValue={inputValue}
+                //inputValue={inputValue}
+                //value={val}
                 disabled={disabled}
                 renderInput={(params) => {
-                    return <TextField label={label} type={type || 'text'} {...params} name={name} {...field} error={meta.error && meta.touched} variant="outlined" />
+                    return <TextField autoComplete="off" label={label} type={type || 'text'} {...params} {...field} name={name} inputProps={{...params.inputProps,autoComplete: "new-password"}} error={meta.error && meta.touched} variant="outlined" />
                 }}
             />
             </div>

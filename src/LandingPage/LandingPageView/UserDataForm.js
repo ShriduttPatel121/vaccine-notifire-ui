@@ -12,9 +12,10 @@ import {
     FormControlLabel,
     FormLabel
   } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { makeStyles } from "@material-ui/styles";
+import { useHistory } from 'react-router-dom';
 
 import TextInput from "../../Shared/UIElements/Input/TextInput";
 import { useHttpClient } from '../../Shared/hooks/http-hook';
@@ -50,6 +51,9 @@ const UserDataForm =  (props) => {
     const [districtDisabled, setDistrictDisabled] = useState(true);
     const [selectedDistrict, setSelectedDistrict] = useState("");
     const [selectedState, setSelectedState] = useState("");
+    const [stateId, setStateId] = useState();
+    const [districtId, setDistrictId] = useState();
+    const history = useHistory();
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -88,16 +92,19 @@ const UserDataForm =  (props) => {
                 Yup.object({
                     name: Yup.string().required('Name is a required field'),
                     pincode: Yup.string().required("pincode is required").trim().length(6),
-                    state: Yup.string().required(),
-                    district: Yup.string().required()
+                    state: Yup.string().required().oneOf(states.map(s => s.name), "please select a valid state"),
+                    district: Yup.string().required("please provide a valid distric. for selected state").oneOf(districts.map(d => d.name))
                 })
             }
-            onSubmit={ (value, { setSubmitting, resetForm }) => {
+            onSubmit={ async (value, { setSubmitting, resetForm, ...actions}) => {
                 console.log(value);
-                resetForm();
-                setSelectedState("");
-                setSelectedDistrict("");
-                setDistricts([{id: null, name: ""}]);
+                // resetForm();
+                // setSelectedState("");
+                // setSelectedDistrict("");
+                // setStateId(null);
+                // setDistrictId(null);
+                // setDistricts([{id: null, name: ""}]);
+                history.push(`/nextAvailableSlots?districtId=${districtId}&minAge=${value.ageGroup}`);
             }}
         >
             {
@@ -111,20 +118,25 @@ const UserDataForm =  (props) => {
                                 label="State"
                                 inputValue={selectedState}
                                 disabled={false}
-                                onChange={(e, value) => {
+                                onChange={async (e, value) => {
                                     console.log(value);
-                                    fetchDistricts(value?.id)
+                                    await fetchDistricts(value?.id)
                                     setDistrictDisabled(false);
                                     
                                     if (!value) {
                                         setSelectedDistrict("");
                                         setSelectedState("");
                                         setDistrictDisabled(true);
+                                        setStateId(null);
+                                        setDistrictId(null);
                                         props.setFieldValue("district", "");
-                                        props.setFieldValue("state", "")
+                                        props.setFieldValue("state", "");
                                     } else{
                                         setSelectedState(value?.name);
                                         props.setFieldValue("state", value?.name);
+                                        setStateId(value?.id);
+                                        //props.setFieldValue("district", districts[0]?.name);
+                                        //selected
                                     }
                                 }}
                             />
@@ -139,8 +151,10 @@ const UserDataForm =  (props) => {
                                     props.setFieldValue("district", value?.name)
                                     if (value !== null) {
                                         setSelectedDistrict(value?.name);
+                                        setDistrictId(value?.id);
                                     } else {
                                         setSelectedDistrict("");
+                                        setDistrictId(null);
                                     }
                                 }}
                             />
