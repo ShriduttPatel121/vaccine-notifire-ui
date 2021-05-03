@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const bull = <span style={{display: 'inline-block', margin: '0 2px', transform: 'scale(0.8)'}}>•</span>;
 const AvailableSlots = (props) => {
   const classes = useStyles();
   const location = useLocation();
@@ -76,15 +75,23 @@ const AvailableSlots = (props) => {
         )))
         : (
             <Box height="175px" display="flex" justifyContent="center" flexDirection="column">
-                <Typography variant="h6" component="strong" style={{fontSize: '16.5px'}}>
-                  {bull}  Sorry, we could not find centers for you now. Please provide us your email by clicking NOTIFY ME button. You will receive an email as soon as centers are availabe in your district.
-                </Typography>
+              <ul>
+                <li>
+                  <Typography variant="h6" component="strong" style={{fontSize: '16.5px'}}>
+                    Sorry, we could not find centers for you now. Please provide us your email by clicking NOTIFY ME button. You will receive an email as soon as centers are availabe in your district.
+                  </Typography>
+                </li>
+                <li>
                 <Typography>
-                  {bull} Meanwhile, please sanatize your hands regularly, wear mask and maintain social distancing.
+                  Meanwhile, please sanatize your hands regularly, wear mask and maintain social distancing.
                 </Typography>
-                <Typography>
-                  {bull} THANK YOU FOR USING VACCINE-NOTIFIRE.
-                </Typography>
+                </li>
+                <li>
+                  <Typography>
+                    THANK YOU FOR USING VACCINE-NOTIFIRE.
+                  </Typography>
+                </li>
+              </ul>
             </Box>
         )}
       </Box>
