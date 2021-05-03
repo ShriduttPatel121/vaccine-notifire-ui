@@ -16,7 +16,11 @@ const useStyles = makeStyles(theme => ({
     cardRoot: {
         minWidth: 375,
         maxWidth: 375,
-        overflow: 'auto'
+        overflow: 'auto',
+        '@media(max-width: 700px)': {
+          minWidth: 200,
+          maxWidth: 200
+        }
     },
     // cardTitle: {
     //     fontSize: 14

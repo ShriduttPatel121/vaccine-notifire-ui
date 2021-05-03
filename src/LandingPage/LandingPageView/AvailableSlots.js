@@ -35,7 +35,7 @@ const AvailableSlots = (props) => {
     const fetchNextSlots = async () => {
       try {
         const slots = await sendRequest(
-          `http://65.0.93.90:9090/vaccine-notifier/getNextSlot?district_id=${districtId}&minAge=${minAge}`
+          `https://api.vaccinenotifier.co.in/vaccine-notifier/getNextSlot?district_id=${districtId}&minAge=${minAge}`
         );
         setAvailableSlots(slots);
       } catch (e) {

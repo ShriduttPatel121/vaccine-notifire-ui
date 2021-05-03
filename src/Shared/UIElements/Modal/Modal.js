@@ -66,7 +66,7 @@ const Modal = (props) => {
             emailId
         }
         try {
-            await sendRequest('http://65.0.93.90:9090/vaccine-notifier/addSubscriber', "POST", JSON.stringify(body), { "Content-Type": "application/json" });
+            await sendRequest('https://api.vaccinenotifier.co.in/vaccine-notifier/addSubscriber', "POST", JSON.stringify(body), { "Content-Type": "application/json" });
             alert('You have successfully subcribed for email notification, you will receive an email as soon as centers are available');
           } catch (e) {
             console.log(e);
@@ -78,15 +78,14 @@ const Modal = (props) => {
         }
 
         try {
-            await sendRequest('http://65.0.93.90:9090/vaccine-notifier/deleteSubscriber', "POST", JSON.stringify(body), { "Content-Type": "application/json" });
+            await sendRequest('https://api.vaccinenotifier.co.in/vaccine-notifier/deleteSubscriber', "POST", JSON.stringify(body), { "Content-Type": "application/json" });
             alert('You have successfully un-subscribe for email notification, you will not receive any email.');
           } catch (e) {
             console.log(e);
             alert('Sorry somthing went wrong, please try again later.');
           }
-
-          onCloseModal();
       }
+      onCloseModal();
   }
   const emailChangeHandler = (e) => {
     setEmail(e.target.value);
