@@ -45,7 +45,7 @@ function MainHeader(props) {
       <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h6">
-            Vacine-Notifire
+            VaccineNotifire
           </Typography>
           <Box flexGrow="1"/>
           <Button variant="outlined" color="secondary" onClick={openModal}>

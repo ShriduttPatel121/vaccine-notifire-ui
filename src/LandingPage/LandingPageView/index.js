@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Button, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Route } from 'react-router-dom';
 
@@ -24,6 +24,11 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(1),
         marginLeft: -theme.spacing(1),
         textAlign: 'center',
+    },
+
+    bookSlotBtn: {
+        margin: 'auto',
+        marginTop: theme.spacing(2),
     }
 }));
 const LandingPageView =  (props) =>{
@@ -34,6 +39,10 @@ const LandingPageView =  (props) =>{
         setRefreshRedults(preState => preState + 1);
     }
 
+    const slotBookHandler = () => {
+        window.open("https://www.cowin.gov.in/home");
+      }
+
     const classes = useStyles();
     return(
         <Grid style={{width: '100%'}} className={classes.root} container direction="column">
@@ -41,8 +50,11 @@ const LandingPageView =  (props) =>{
                 <UserDataForm setRefreshRedults={updatesearchResult}/>
             </Grid>
             <Grid item xs={12} md={12} lg={12} xl={12} className={classes.slotGrid}>
-                <Route path="/nextAvailableSlots" >
+                <Route path="/home/nextAvailableSlots" >
                     <AvailableSlots refreshRedults={refreshRedults}/>
+                    <Box width="100%" display="flex" justifyContent="center">
+                    <Button className={classes.bookSlotBtn} color="primary" variant="contained" onClick={slotBookHandler} >Book your slot</Button>
+                    </Box>
                 </Route>
             </Grid>
         </Grid>

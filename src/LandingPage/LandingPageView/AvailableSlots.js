@@ -11,11 +11,13 @@ import Spinner from "../../Shared/UIElements/Spinner/spinner";
 const useStyles = makeStyles((theme) => ({
   slotHeading: {
     borderBottom: "1px solid #1c4e6ba3",
-    marginTop: 0,
+    marginTop: -theme.spacing(1),
     marginRight: -theme.spacing(1),
     marginBottom: theme.spacing(1),
     marginLeft: -theme.spacing(1),
     textAlign: "center",
+    backgroundColor: theme.palette.primary.main,
+    padding: '0.5rem 0'
   },
 }));
 
@@ -49,15 +51,15 @@ const AvailableSlots = (props) => {
 
   return (
     <>
-      {isLoading ? <Spinner /> : null}
-      <Box
+      {isLoading ? <Spinner /> :
+      (<Box
         overflow="auto"
         maxHeight="500px"
         border="1px solid #1c4e6ba3"
         padding="0.5rem"
       >
         <div className={classes.slotHeading}>
-          <Typography variant="h4" component="h5">
+          <Typography variant="h4" component="h5" style={{color: 'white'}}>
             Available Centers
           </Typography>
         </div>
@@ -89,13 +91,13 @@ const AvailableSlots = (props) => {
                 </li>
                 <li>
                   <Typography>
-                    THANK YOU FOR USING VACCINE-NOTIFIRE.
+                    Thanks for using VaccineNotifire.
                   </Typography>
                 </li>
               </ul>
             </Box>
         )}
-      </Box>
+      </Box>)}
     </>
   );
 };

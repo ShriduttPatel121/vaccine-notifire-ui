@@ -18,7 +18,7 @@ const AutoComplete = React.forwardRef((props, ref) => {
                 //value={val}
                 disabled={disabled}
                 renderInput={(params) => {
-                    return <TextField autoComplete="off" label={label} type={type || 'text'} {...params} {...field} name={name} inputProps={{...params.inputProps,autoComplete: "new-password"}} error={meta.error && meta.touched} variant="outlined" />
+                    return <TextField label={label} type={type || 'text'} {...params} {...field} name={name} inputProps={{...params.inputProps,autoComplete: "new-password"}} error={meta.error && meta.touched} variant="outlined" autoComplete="off"/>
                 }}
             />
             </div>

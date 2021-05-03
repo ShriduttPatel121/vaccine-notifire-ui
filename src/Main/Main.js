@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
     Route,
   Switch,
+  Redirect
 } from "react-router-dom";
 
 import "./Main.css";
@@ -12,9 +13,10 @@ function Main(props) {
 
     const routes = (
         <Switch>
-            <Route path="/">
+            <Route path="/home">
                 <LandingPageView />
             </Route>
+            <Redirect to="/home" />
         </Switch>
     );
 

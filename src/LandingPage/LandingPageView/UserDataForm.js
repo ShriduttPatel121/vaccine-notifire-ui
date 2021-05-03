@@ -116,7 +116,7 @@ const UserDataForm =  (props) => {
                 // setDistricts([{id: null, name: ""}]);
                 setSubmitting(false);
                 console.log('submit clicked')
-                history.push(`/nextAvailableSlots?districtId=${districtId}&minAge=${value.ageGroup}`);
+                history.push(`/home/nextAvailableSlots?districtId=${districtId}&minAge=${value.ageGroup}`);
                 setRefreshRedults();
             }}
         >

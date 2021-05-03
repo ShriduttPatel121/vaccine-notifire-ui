@@ -16,7 +16,6 @@ const useStyles = makeStyles(theme => ({
     cardRoot: {
         minWidth: 375,
         maxWidth: 375,
-        maxHeight: 120,
         overflow: 'auto'
     },
     // cardTitle: {
@@ -62,7 +61,7 @@ const CenterDetails = (props) => {
               {block_name}{', '}{state_name}{', '}{district_name}{', '}{pincode}
           </Typography>
           <Typography variant="h5" component="h3" style={{fontSize: '1rem'}}>
-            Fees: {' '}{fee_type}
+            Fees: {' '}{fee_type === 'Free' ? <strong style={{color: '#1ab64f'}}>{fee_type}</strong> : <strong>{fee_type}</strong>}
           </Typography>
         </CardContent>
       </Card>
@@ -77,7 +76,7 @@ const CenterDetails = (props) => {
                                             {ses.date}
                                         </Typography>
                                     <Chip color="primary" label={ses.available_capacity}/>
-                                    <Typography variant="h5" component="span" style={{fontSize: '1rem', marginTop: '0.4rem'}} >
+                                    <Typography variant="h5" component="span" style={{fontSize: '1rem', marginTop: '0.4rem', color: (ses.min_age_limit === 18 ? '#1ab64f' : '#d53b4c')}} >
                                             {ses.min_age_limit}+
                                     </Typography>
                                     <Typography variant="h5" component="p" style={{fontSize: '0.8rem', marginTop: '0.4rem'}}>
