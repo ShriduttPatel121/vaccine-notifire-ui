@@ -78,7 +78,7 @@ const Modal = (props) => {
         }
 
         try {
-            await sendRequest('http://65.0.93.90:9090/vaccine-notifier/deleteSubscriber', "DELETE", JSON.stringify(body), { "Content-Type": "application/json" });
+            await sendRequest('http://65.0.93.90:9090/vaccine-notifier/deleteSubscriber', "POST", JSON.stringify(body), { "Content-Type": "application/json" });
             alert('You have successfully un-subscribe for email notification, you will not receive any email.');
           } catch (e) {
             console.log(e);
