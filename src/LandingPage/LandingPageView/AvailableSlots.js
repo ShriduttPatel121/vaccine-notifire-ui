@@ -71,6 +71,7 @@ const AvailableSlots = (props) => {
             state_name={center.state_name}
             district_name={center.district_name}
             block_name={center.block_name}
+            fee_type={center.fee_type}
           />
         )))
         : (

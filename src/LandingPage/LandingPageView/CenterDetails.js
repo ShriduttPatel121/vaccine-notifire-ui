@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 
 const CenterDetails = (props) => {
 
-    const { name, pincode, sessions, state_name, district_name, block_name } = props;
+    const { name, pincode, sessions, state_name, district_name, block_name, fee_type } = props;
     const classes = useStyles();
 
   return (
@@ -61,6 +61,9 @@ const CenterDetails = (props) => {
           <Typography color="textSecondary">
               {block_name}{', '}{state_name}{', '}{district_name}{', '}{pincode}
           </Typography>
+          <Typography variant="h5" component="h3" style={{fontSize: '1rem'}}>
+            Fees: {' '}{fee_type}
+          </Typography>
         </CardContent>
       </Card>
             <div className={classes.root} >
@@ -70,10 +73,16 @@ const CenterDetails = (props) => {
                         return (
                             <GridListTile key={ses.session_id} style={{width: 'fit-content', height: 'auto', display: 'flex'}}>
                                 <Paper elevation={0} style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center', height: '100%', padding: '1rem'}}>
-                                    <Typography variant="h5" component="h3">
+                                    <Typography variant="h5" component="h3" style={{fontSize: '1rem'}}>
                                             {ses.date}
                                         </Typography>
                                     <Chip color="primary" label={ses.available_capacity}/>
+                                    <Typography variant="h5" component="span" style={{fontSize: '1rem', marginTop: '0.4rem'}} >
+                                            {ses.min_age_limit}+
+                                    </Typography>
+                                    <Typography variant="h5" component="p" style={{fontSize: '0.8rem', marginTop: '0.4rem'}}>
+                                            {ses.vaccine}
+                                    </Typography>
                                 </Paper>
                                 <Divider orientation="vertical" style={{height: '100%'}}/>
                             </GridListTile>
