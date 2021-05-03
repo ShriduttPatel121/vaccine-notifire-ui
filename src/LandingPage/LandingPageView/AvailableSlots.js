@@ -1,36 +1,94 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { Typography, Box } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 
-import { useHttpClient } from '../../Shared/hooks/http-hook';
-import { c } from './demoslots';
-import CenterDetails from './CenterDetails';
-const AvailableSlots =  (props) =>{
-    const location = useLocation();
-    const { isLoading, sendRequest } = useHttpClient();
-    const [availableSlots, setAvailableSlots] = useState([]);
+import { useHttpClient } from "../../Shared/hooks/http-hook";
+/* import { c } from './demoslots'; */
+import CenterDetails from "./CenterDetails";
+import Spinner from "../../Shared/UIElements/Spinner/spinner";
 
-    const queryParams = new URLSearchParams(location.search);
-    const districtId = queryParams.get('districtId');
-    const minAge = queryParams.get('minAge');
-    useEffect(() => {
-        const fetchNextSlots = async () => {
-            try {
-                const slots = await sendRequest(`http://65.0.93.90:9090/vaccine-notifier/getNextSlot?district_id=${districtId}&minAge=${minAge}`);
-                //http://65.0.93.90:9090/vaccine-notifier/getNextSlot?district_id=154&minAge=18
-                //http://65.0.93.90:9090/vaccine-notifier/getNextSlot?district_id=154&minAge=18
-                setAvailableSlots(slots)
-            } catch (e) {
-                console.log(e);
-            }
-        }
+const useStyles = makeStyles((theme) => ({
+  slotHeading: {
+    borderBottom: "1px solid #1c4e6ba3",
+    marginTop: 0,
+    marginRight: -theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    marginLeft: -theme.spacing(1),
+    textAlign: "center",
+  },
+}));
 
-        fetchNextSlots();
-    },[sendRequest, districtId, minAge]);
+const bull = <span style={{display: 'inline-block', margin: '0 2px', transform: 'scale(0.8)'}}>•</span>;
+const AvailableSlots = (props) => {
+  const classes = useStyles();
+  const location = useLocation();
+  const { isLoading, sendRequest } = useHttpClient();
+  const [availableSlots, setAvailableSlots] = useState([]);
 
-    return(
-        <>
-            {c.map(center => <CenterDetails key={center.center_id} name={center.name} pincode={center.pincode} sessions={center.sessions} state_name={center.state_name} district_name={center.district_name} block_name={center.block_name}/>)}
-        </>
-    );
+  let { refreshRedults } = props;
+  let queryParams = new URLSearchParams(location.search);
+  let districtId = queryParams.get("districtId");
+  const minAge = queryParams.get("minAge");
+  useEffect(() => {
+    const fetchNextSlots = async () => {
+      try {
+        const slots = await sendRequest(
+          `http://65.0.93.90:9090/vaccine-notifier/getNextSlot?district_id=${districtId}&minAge=${minAge}`
+        );
+        setAvailableSlots(slots);
+      } catch (e) {
+        console.log(e);
+        alert(
+          "Somthing went wrong while searching suitable centers for you, please try again later."
+        );
+      }
+    };
+
+    fetchNextSlots();
+  }, [sendRequest, districtId, minAge, refreshRedults]);
+
+  return (
+    <>
+      {isLoading ? <Spinner /> : null}
+      <Box
+        overflow="auto"
+        maxHeight="500px"
+        border="1px solid #1c4e6ba3"
+        padding="0.5rem"
+      >
+        <div className={classes.slotHeading}>
+          <Typography variant="h4" component="h5">
+            Available Centers
+          </Typography>
+        </div>
+        {availableSlots.length > 0 ?
+        ( availableSlots.map((center) => (
+          <CenterDetails
+            key={center.center_id}
+            name={center.name}
+            pincode={center.pincode}
+            sessions={center.sessions}
+            state_name={center.state_name}
+            district_name={center.district_name}
+            block_name={center.block_name}
+          />
+        )))
+        : (
+            <Box height="175px" display="flex" justifyContent="center" flexDirection="column">
+                <Typography variant="h6" component="strong" style={{fontSize: '16.5px'}}>
+                  {bull}  Sorry, we could not find centers for you now. Please provide us your email by clicking NOTIFY ME button. You will receive an email as soon as centers are availabe in your district.
+                </Typography>
+                <Typography>
+                  {bull} Meanwhile, please sanatize your hands regularly, wear mask and maintain social distancing.
+                </Typography>
+                <Typography>
+                  {bull} THANK YOU FOR USING VACCINE-NOTIFIRE.
+                </Typography>
+            </Box>
+        )}
+      </Box>
+    </>
+  );
 };
 export default AvailableSlots;

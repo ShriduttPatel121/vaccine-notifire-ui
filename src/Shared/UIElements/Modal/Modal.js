@@ -6,7 +6,8 @@ import {
   DialogTitle,
   Slide,
   Button,
-  TextField
+  TextField,
+  CircularProgress
 } from "@material-ui/core";
 
 import { makeStyles } from '@material-ui/styles';
@@ -52,7 +53,7 @@ const Modal = (props) => {
   const [email, setEmail] = useState("");
   const [isEmail, setIsEmail] = useState(false);
   const { isLoading, sendRequest } = useHttpClient();
-  let { open, onCloseModal, title, children, userData, stateId, districtId, unSubScribe } = props;
+  let { open, onCloseModal, title, userData, stateId, districtId, unSubScribe } = props;
 
   const registerForNotification = async (emailId) => {
       
@@ -65,9 +66,11 @@ const Modal = (props) => {
             emailId
         }
         try {
-            const response = await sendRequest('http://65.0.93.90:9090/vaccine-notifier/addSubscriber', "POST", JSON.stringify(body), { "Content-Type": "application/json" });
+            await sendRequest('http://65.0.93.90:9090/vaccine-notifier/addSubscriber', "POST", JSON.stringify(body), { "Content-Type": "application/json" });
+            alert('You have successfully subcribed for email notification, you will receive an email as soon as centers are available');
           } catch (e) {
             console.log(e);
+            alert('Sorry somthing went wrong, please try again later.');
           }
       } else {
         const body = {
@@ -75,10 +78,14 @@ const Modal = (props) => {
         }
 
         try {
-            const response = await sendRequest('http://65.0.93.90:9090/vaccine-notifier/deleteSubscriber', "DELETE", JSON.stringify(body), { "Content-Type": "application/json" });
+            await sendRequest('http://65.0.93.90:9090/vaccine-notifier/deleteSubscriber', "DELETE", JSON.stringify(body), { "Content-Type": "application/json" });
+            alert('You have successfully un-subscribe for email notification, you will not receive any email.');
           } catch (e) {
             console.log(e);
+            alert('Sorry somthing went wrong, please try again later.');
           }
+
+          onCloseModal();
       }
   }
   const emailChangeHandler = (e) => {
@@ -99,7 +106,7 @@ const Modal = (props) => {
             <TextField fullWidth variant="outlined" label="Email" value={email} onChange={emailChangeHandler} required/>
           </DialogContent>
           <DialogActions className={classes.actions}>
-              <Button className={classes.btn} variant="contained" color="primary" disabled={!isEmail} onClick={() => registerForNotification(email)}>Submit</Button>
+              {!isLoading ? <Button className={classes.btn} variant="contained" color="primary" disabled={!isEmail} onClick={() => registerForNotification(email)}>Submit</Button> :<div style={{height : '100%', display : 'flex', justifyContent : 'center', alignItems : 'center'}}><CircularProgress size={30}/> </div> }
           </DialogActions>
       </Dialog>
   );

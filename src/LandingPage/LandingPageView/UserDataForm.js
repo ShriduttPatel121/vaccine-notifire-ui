@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Typography,
     Container,
     Card,
     Button,
     Box,
-    Divider,
-    CircularProgress,
     Radio,
     RadioGroup,
     FormControlLabel,
@@ -56,8 +53,9 @@ const UserDataForm =  (props) => {
     const [districtId, setDistrictId] = useState();
     const [notifyModalVisibility, setNotifyModalVisibility] = useState(false);
     const history = useHistory();
+    const { setRefreshRedults } = props
 
-    const { isLoading, error, sendRequest, clearError } = useHttpClient();
+    const { sendRequest } = useHttpClient();
 
     useEffect(() => {
         try {
@@ -68,17 +66,17 @@ const UserDataForm =  (props) => {
             }
             fetchStates();
         } catch (e) {
-
+            alert("Somthing went wrong while fetching all states, please try again later.");
         }
     },[sendRequest]);
 
     const fetchDistricts = async (state_id) => {
-        const receivedDistricts = await sendRequest(`https://cdn-api.co-vin.in/api/v2/admin/location/districts/${state_id}`);
-        setDistricts(receivedDistricts.districts.map((dis) => ({id: dis.district_id, name: dis.district_name})));
-    }
-
-    const registerEmailWithUserData = (userData, email) => {
-
+        try {
+            const receivedDistricts = await sendRequest(`https://cdn-api.co-vin.in/api/v2/admin/location/districts/${state_id}`);
+            setDistricts(receivedDistricts.districts.map((dis) => ({id: dis.district_id, name: dis.district_name})));
+        } catch(e) {
+            alert("Somthing went wrong while fetching districts, please try again later.");
+        }
     }
 
     const closeNotifyModal = () => {
@@ -106,8 +104,8 @@ const UserDataForm =  (props) => {
                 Yup.object({
                     name: Yup.string().required('Name is a required field'),
                     pincode: Yup.string().required("pincode is required").trim().length(6),
-                    state: Yup.string().required().oneOf(states.map(s => s.name), "please select a valid state"),
-                    district: Yup.string().required("please provide a valid distric. for selected state").oneOf(districts.map(d => d.name))
+                    state: Yup.string().required().oneOf(states.map(s => s.name), "select a valid state"),
+                    district: Yup.string().required("please provide a valid district").oneOf(districts.map(d => d.name), 'select a valid district or select again from the list')
                 })
             }
             onSubmit={ async (value, { setSubmitting, resetForm, ...actions}) => {
@@ -118,7 +116,10 @@ const UserDataForm =  (props) => {
                 // setStateId(null);
                 // setDistrictId(null);
                 // setDistricts([{id: null, name: ""}]);
+                setSubmitting(false);
+                console.log('submit clicked')
                 history.push(`/nextAvailableSlots?districtId=${districtId}&minAge=${value.ageGroup}`);
+                setRefreshRedults();
             }}
         >
             {

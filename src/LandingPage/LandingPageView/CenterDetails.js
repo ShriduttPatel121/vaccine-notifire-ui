@@ -2,12 +2,9 @@ import React from "react";
 import {
   GridList,
   GridListTile,
-  GridListTileBar,
   Card,
-  CardActions,
   CardContent,
   Typography,
-  Button,
   Box,
   Chip,
   Divider,
