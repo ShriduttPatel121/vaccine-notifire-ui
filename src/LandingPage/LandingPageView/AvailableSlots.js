@@ -91,7 +91,7 @@ const AvailableSlots = (props) => {
                 </li>
                 <li>
                   <Typography>
-                    Thanks for using VaccineNotifire.
+                    Thanks for using VaccineNotifier.
                   </Typography>
                 </li>
               </ul>
