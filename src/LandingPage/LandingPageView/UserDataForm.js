@@ -93,7 +93,6 @@ const UserDataForm =  (props) => {
             enableReinitialize
             initialValues={
                 {
-                    name: "",
                     state: "",
                     district: "",
                     pincode: "",
@@ -102,8 +101,7 @@ const UserDataForm =  (props) => {
             }
             validationSchema={
                 Yup.object({
-                    name: Yup.string().required('Name is a required field'),
-                    pincode: Yup.string().required("pincode is required").trim().length(6),
+                    pincode: Yup.string().trim().length(6),
                     state: Yup.string().required().oneOf(states.map(s => s.name), "select a valid state"),
                     district: Yup.string().required("please provide a valid district").oneOf(districts.map(d => d.name), 'select a valid district or select again from the list')
                 })
@@ -184,7 +182,6 @@ const UserDataForm =  (props) => {
                                 }}
                             />
                             <TextInput name="pincode" label="Pincode" variant="outlined" />
-                            <TextInput name="name" label="Name" variant="outlined" />
                             <FormLabel component="legend" style={{textAlign: 'initial', paddingLeft: '1rem', paddingTop: '0.5rem'}}>Age Group</FormLabel>
                             <RadioGroup aria-label="age-group" style={{flexDirection: 'row', paddingLeft: '1rem'}} value={props.values.ageGroup} onChange={
                                 (e) => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   AppBar,
   Toolbar,
@@ -6,20 +6,33 @@ import {
   Box,
   Button
 } from "@material-ui/core";
+import { useLocation } from "react-router-dom";
 
 import Modal from '../Modal/Modal';
 
 function MainHeader(props) {
 
   const [unSubScribeModal, setUnSubScribeModal] = useState(false);
+  const location = useLocation();
+  let { search } = location;
+  let queryParams = new URLSearchParams(search);
+  let hasUnSubScribe = queryParams.get('unSubscribe');
+  console.log(typeof(hasUnSubScribe));
+  console.log(hasUnSubScribe);
 
   const closeModal = () => {
     setUnSubScribeModal(false);
   }
 
-  const openModal = () => {
+  const openModal = useCallback(() => {
     setUnSubScribeModal(true);
-  }
+  }, []);
+
+  useEffect(() => {
+    if(hasUnSubScribe === 'true') {
+      openModal();
+    }
+  }, [hasUnSubScribe, openModal]);
 
     return (
     <div>
