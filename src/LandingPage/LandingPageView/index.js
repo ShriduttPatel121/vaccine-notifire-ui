@@ -8,14 +8,21 @@ import AvailableSlots from './AvailableSlots';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        padding: theme.spacing(3)
+        padding: theme.spacing(3),
+        '@media(max-width: 700px)': {
+            padding: theme.spacing(1)
+        }
     },
     slotGrid: {
         marginTop: theme.spacing(3),
         padding: theme.spacing(1),
+        '@media(max-width: 700px)': {
+            maxHeight: '40vh'
+        }
+
         // maxHeight: '500px',
         // border: '1px solid #1c4e6ba3',
-        // overflow: 'auto',
+        //overflow: 'auto',
     },
     slotHeading: {
         borderBottom: '1px solid #1c4e6ba3',
@@ -29,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     bookSlotBtn: {
         margin: 'auto',
         marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2)
     }
 }));
 const LandingPageView =  (props) =>{

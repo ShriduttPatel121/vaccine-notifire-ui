@@ -17,6 +17,9 @@ const useStyle = makeStyles( (theme) => ({
   root : {
     '& .MuiDialog-paperWidthSm' : {
       width : '40vw',
+      '@media(max-width: 700px)': {
+        width: '85vw'
+      }
     },
     '& .MuiDialogTitle-root' : {
       backgroundColor : theme.palette.primary.main,

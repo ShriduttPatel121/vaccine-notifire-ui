@@ -18,8 +18,9 @@ const useStyles = makeStyles(theme => ({
         maxWidth: 375,
         overflow: 'auto',
         '@media(max-width: 700px)': {
-          minWidth: 200,
-          maxWidth: 200
+          minWidth: 300,
+          maxWidth: 300,
+          margin: 'auto'
         }
     },
     // cardTitle: {
@@ -30,9 +31,14 @@ const useStyles = makeStyles(theme => ({
         flexWrap: 'wrap',
         justifyContent: 'space-around',
         overflow: 'hidden',
+        width: 'max-content',
         backgroundColor: theme.palette.background.paper,
         '& .MuiGridListTile-tile' : {
-            display: 'flex'
+            display: 'flex',
+        },
+        '@media(max-width: 700px)': {
+          maxWidth: '100%',
+          margin: 'auto'
         }
       },
       gridList: {
@@ -46,6 +52,25 @@ const useStyles = makeStyles(theme => ({
         background:
           'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
       },
+      ft1_1: {
+        '@media(max-width: 700px)': {
+          fontSize: '1.1rem'
+        }
+      },
+      ft0_9: {
+        '@media(max-width: 700px)': {
+          fontSize: '0.9rem'
+        }
+      },
+      mobileView: {
+        '@media(max-width: 700px)': {
+          flexDirection: 'column',
+          borderBottom: '3px solid #1c405491',
+          padding: 5,
+          marginLeft: -theme.spacing(1),
+          marginRight: -theme.spacing(1)
+        }
+      }
 
 }))
 
@@ -55,13 +80,13 @@ const CenterDetails = (props) => {
     const classes = useStyles();
 
   return (
-    <Box display="flex" justifyContent="flex-start" gridGap="0.5rem" marginBottom="1rem">
+    <Box display="flex" justifyContent="flex-start" gridGap="0.5rem" marginBottom="1rem" className={classes.mobileView}>
       <Card className={classes.cardRoot}>
         <CardContent>
-          <Typography variant="h5" component="h4">
+          <Typography className={classes.ft1_1} variant="h5" component="h4">
               {name}
           </Typography>
-          <Typography color="textSecondary">
+          <Typography className={classes.ft0_9} color="textSecondary">
               {block_name}{', '}{state_name}{', '}{district_name}{', '}{pincode}
           </Typography>
           <Typography variant="h5" component="h3" style={{fontSize: '1rem'}}>

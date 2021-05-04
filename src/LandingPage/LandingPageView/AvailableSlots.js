@@ -19,6 +19,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
     padding: '0.5rem 0'
   },
+  noResults: {
+    '@media(max-width: 700px)': {
+      height: '220px'
+    }
+  }
 }));
 
 const AvailableSlots = (props) => {
@@ -54,7 +59,7 @@ const AvailableSlots = (props) => {
       {isLoading ? <Spinner /> :
       (<Box
         overflow="auto"
-        maxHeight="500px"
+        maxHeight="58vh"
         border="1px solid #1c4e6ba3"
         padding="0.5rem"
       >
@@ -77,7 +82,7 @@ const AvailableSlots = (props) => {
           />
         )))
         : (
-            <Box height="175px" display="flex" justifyContent="center" flexDirection="column">
+            <Box className={classes.noResults} height="175px" display="flex" justifyContent="center" flexDirection="column">
               <ul>
                 <li>
                   <Typography variant="h6" component="strong" style={{fontSize: '16.5px'}}>
@@ -91,7 +96,7 @@ const AvailableSlots = (props) => {
                 </li>
                 <li>
                   <Typography>
-                    Thanks for using VaccineNotifier.
+                    Thank you for using VaccineNotifier.
                   </Typography>
                 </li>
               </ul>
