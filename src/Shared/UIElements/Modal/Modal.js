@@ -7,7 +7,8 @@ import {
   Slide,
   Button,
   TextField,
-  CircularProgress
+  CircularProgress,
+  Typography
 } from "@material-ui/core";
 
 import { makeStyles } from '@material-ui/styles';
@@ -32,7 +33,8 @@ const useStyle = makeStyles( (theme) => ({
   content: {
     display: 'flex',
     justifyContent: 'center',
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    flexDirection: 'column'
   },
   actions : {
     padding : '10px'
@@ -106,6 +108,7 @@ const Modal = (props) => {
           <DialogContent className={classes.content}>
             {/* {children} */}
             <TextField fullWidth variant="outlined" label="Email" value={email} onChange={emailChangeHandler} required/>
+            {!unSubScribe ? <Typography variant="subtitle2">*Please provide an active email address.</Typography> : null }
           </DialogContent>
           <DialogActions className={classes.actions}>
               {!isLoading ? <Button className={classes.btn} variant="contained" color="primary" disabled={!isEmail} onClick={() => registerForNotification(email)}>Submit</Button> :<div style={{height : '100%', display : 'flex', justifyContent : 'center', alignItems : 'center', width: '100%'}}><CircularProgress size={30}/> </div> }
