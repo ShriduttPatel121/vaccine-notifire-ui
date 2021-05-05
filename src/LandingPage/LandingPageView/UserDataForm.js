@@ -52,6 +52,7 @@ const UserDataForm =  (props) => {
     const [stateId, setStateId] = useState();
     const [districtId, setDistrictId] = useState();
     const [notifyModalVisibility, setNotifyModalVisibility] = useState(false);
+    const [shouldRefresh, setShouldRefresh] = useState(false);//to enable searching on same selcted dis. and state
     const { searchHandler } = props
 
     const { sendRequest } = useHttpClient();
@@ -60,7 +61,6 @@ const UserDataForm =  (props) => {
         try {
             const fetchStates = async () => {
                 const receivedStates = await sendRequest('https://cdn-api.co-vin.in/api/v2/admin/location/states');
-                console.log(receivedStates);
                 setStates(receivedStates.states.map((state) => ({id: state.state_id, name: state.state_name})));
             }
             fetchStates();
@@ -106,7 +106,6 @@ const UserDataForm =  (props) => {
                 })
             }
             onSubmit={(value, { setSubmitting, resetForm, ...actions}) => {
-                console.log(value);
                 // resetForm();
                 // setSelectedState("");
                 // setSelectedDistrict("");
@@ -114,7 +113,8 @@ const UserDataForm =  (props) => {
                 // setDistrictId(null);
                 // setDistricts([{id: null, name: ""}]);
                 setSubmitting(false);
-                searchHandler(districtId, value.ageGroup);
+                searchHandler(districtId, value.ageGroup, shouldRefresh);
+                setShouldRefresh(true);// to enable searching on same selcted dis. and state
             }}
         >
             {
@@ -139,7 +139,6 @@ const UserDataForm =  (props) => {
                                 inputValue={selectedState}
                                 disabled={false}
                                 onChange={async (e, value) => {
-                                    console.log(value);
                                     await fetchDistricts(value?.id)
                                     setDistrictDisabled(false);
                                     
@@ -155,6 +154,7 @@ const UserDataForm =  (props) => {
                                         setSelectedState(value?.name);
                                         props.setFieldValue("state", value?.name);
                                         setStateId(value?.id);
+                                        setShouldRefresh(false);// to enable searching on same selcted dis. and state
                                         //props.setFieldValue("district", districts[0]?.name);
                                         //selected
                                     }
@@ -167,11 +167,11 @@ const UserDataForm =  (props) => {
                                 label="District"
                                 inputValue={selectedDistrict}
                                 onChange={(e, value) => {
-                                    console.log(value);
                                     props.setFieldValue("district", value?.name)
                                     if (value !== null) {
                                         setSelectedDistrict(value?.name);
                                         setDistrictId(value?.id);
+                                        setShouldRefresh(false);// to enable searching on same selcted dis. and state
                                     } else {
                                         setSelectedDistrict("");
                                         setDistrictId(null);

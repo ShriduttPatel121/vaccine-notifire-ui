@@ -4,7 +4,6 @@ import { Typography, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
 import { useHttpClient } from "../../Shared/hooks/http-hook";
-/* import { c } from './demoslots'; */
 import CenterDetails from "./CenterDetails";
 import Spinner from "../../Shared/UIElements/Spinner/spinner";
 
@@ -37,8 +36,6 @@ const AvailableSlots = (props) => {
   let districtId = queryParams.get("districtId");
   const minAge = queryParams.get("minAge");
   useEffect(() => {
-    console.log('refreshed'+ refreshRedults);
-    console.log('dis'+districtId + 'minAge' + minAge);
     const fetchNextSlots = async () => {
       try {
         const slots = await sendRequest(
@@ -46,7 +43,6 @@ const AvailableSlots = (props) => {
         );
         setAvailableSlots(slots);
       } catch (e) {
-        console.log(e);
         alert(
           "Somthing went wrong while searching suitable centers for you, please try again later."
         );

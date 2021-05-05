@@ -74,7 +74,6 @@ const Modal = (props) => {
             await sendRequest('https://api.vaccinenotifier.co.in/vaccine-notifier/addSubscriber', "POST", JSON.stringify(body), { "Content-Type": "application/json" });
             alert('You have successfully subcribed for email notification, you will receive an email as soon as centers are available. In case you do not receive the email, please check your Spam folder just in case the email got delivered there instead of your inbox.');
           } catch (e) {
-            console.log(e);
             alert('Sorry somthing went wrong, please try again later.');
           }
       } else {
@@ -86,7 +85,6 @@ const Modal = (props) => {
             await sendRequest('https://api.vaccinenotifier.co.in/vaccine-notifier/deleteSubscriber', "POST", JSON.stringify(body), { "Content-Type": "application/json" });
             alert('You have successfully un-subscribe for email notification, you will not receive any email.');
           } catch (e) {
-            console.log(e);
             alert('Sorry somthing went wrong, please try again later.');
           }
       }
