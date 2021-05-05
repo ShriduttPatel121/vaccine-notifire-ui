@@ -51,8 +51,9 @@ const LandingPageView =  (props) =>{
     }
 
     const searchHandler = (districtId, ageGroup) => {
-        history.push(`/home/nextAvailableSlots?districtId=${districtId}&minAge=${ageGroup}`);
+
         updatesearchResult();
+        history.push(`/home/nextAvailableSlots?districtId=${districtId}&minAge=${ageGroup}`);
     }
 
     const slotBookHandler = () => {
