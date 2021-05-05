@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Grid, Button, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Route } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import UserDataForm from './UserDataForm';
 import AvailableSlots from './AvailableSlots';
@@ -42,9 +43,16 @@ const useStyles = makeStyles((theme) => ({
 const LandingPageView =  (props) =>{
 
     const [refreshRedults, setRefreshRedults] = useState(0);
+    const history = useHistory();
 
     const updatesearchResult = () => {
+        console.log('test');
         setRefreshRedults(preState => preState + 1);
+    }
+
+    const searchHandler = (districtId, ageGroup) => {
+        history.push(`/home/nextAvailableSlots?districtId=${districtId}&minAge=${ageGroup}`);
+        updatesearchResult();
     }
 
     const slotBookHandler = () => {
@@ -55,7 +63,7 @@ const LandingPageView =  (props) =>{
     return(
         <Grid style={{width: '100%'}} className={classes.root} container direction="column">
             <Grid item xs={12} md={12} lg={12} xl={12}>
-                <UserDataForm setRefreshRedults={updatesearchResult}/>
+                <UserDataForm searchHandler={searchHandler}/>
             </Grid>
             <Grid item xs={12} md={12} lg={12} xl={12} className={classes.slotGrid}>
                 <Route path="/home/nextAvailableSlots" >

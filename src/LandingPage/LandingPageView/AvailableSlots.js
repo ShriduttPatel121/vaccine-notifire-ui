@@ -37,6 +37,8 @@ const AvailableSlots = (props) => {
   let districtId = queryParams.get("districtId");
   const minAge = queryParams.get("minAge");
   useEffect(() => {
+    console.log('refreshed'+ refreshRedults);
+    console.log('dis'+districtId + 'minAge' + minAge);
     const fetchNextSlots = async () => {
       try {
         const slots = await sendRequest(

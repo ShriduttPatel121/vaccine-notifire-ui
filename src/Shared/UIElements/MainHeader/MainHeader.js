@@ -17,8 +17,6 @@ function MainHeader(props) {
   let { search } = location;
   let queryParams = new URLSearchParams(search);
   let hasUnSubScribe = queryParams.get('unSubscribe');
-  console.log(typeof(hasUnSubScribe));
-  console.log(hasUnSubScribe);
 
   const closeModal = () => {
     setUnSubScribeModal(false);

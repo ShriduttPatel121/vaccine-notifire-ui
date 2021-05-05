@@ -12,7 +12,7 @@ import {
 import { makeStyles } from "@material-ui/styles";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useHistory } from 'react-router-dom';
+
 
 import TextInput from "../../Shared/UIElements/Input/TextInput";
 import { useHttpClient } from '../../Shared/hooks/http-hook';
@@ -52,8 +52,7 @@ const UserDataForm =  (props) => {
     const [stateId, setStateId] = useState();
     const [districtId, setDistrictId] = useState();
     const [notifyModalVisibility, setNotifyModalVisibility] = useState(false);
-    const history = useHistory();
-    const { setRefreshRedults } = props
+    const { searchHandler } = props
 
     const { sendRequest } = useHttpClient();
 
@@ -106,7 +105,7 @@ const UserDataForm =  (props) => {
                     district: Yup.string().required("please provide a valid district").oneOf(districts.map(d => d.name), 'select a valid district or select again from the list')
                 })
             }
-            onSubmit={ async (value, { setSubmitting, resetForm, ...actions}) => {
+            onSubmit={(value, { setSubmitting, resetForm, ...actions}) => {
                 console.log(value);
                 // resetForm();
                 // setSelectedState("");
@@ -115,9 +114,7 @@ const UserDataForm =  (props) => {
                 // setDistrictId(null);
                 // setDistricts([{id: null, name: ""}]);
                 setSubmitting(false);
-                console.log('submit clicked')
-                history.push(`/home/nextAvailableSlots?districtId=${districtId}&minAge=${value.ageGroup}`);
-                setRefreshRedults();
+                searchHandler(districtId, value.ageGroup);
             }}
         >
             {
