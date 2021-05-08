@@ -38,7 +38,8 @@ const useStyles = makeStyles(theme => ({
         },
         '@media(max-width: 700px)': {
           maxWidth: '100%',
-          margin: 'auto'
+          margin: 'auto',
+          //height: '105%'
         }
       },
       gridList: {

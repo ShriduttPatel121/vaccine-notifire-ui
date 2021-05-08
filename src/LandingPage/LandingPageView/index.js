@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Grid, Button, Box } from "@material-ui/core";
+import { Grid, Button, Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { Route } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { LinkedIn } from '@material-ui/icons';
 
 import UserDataForm from "./UserDataForm";
 import AvailableSlots from "./AvailableSlots";
@@ -10,6 +11,10 @@ import AvailableSlots from "./AvailableSlots";
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(3),
+    //height: '100%',
+    '& > *': {
+      flexBasis: 0
+    },
     "@media(max-width: 700px)": {
       padding: theme.spacing(1),
     },
@@ -39,6 +44,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
+
+  /* footer: {
+    backgroundColor: 'black', //#0a4e6b
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  } */
 }));
 const LandingPageView = (props) => {
   const [refreshRedults, setRefreshRedults] = useState(0);
@@ -61,6 +73,14 @@ const LandingPageView = (props) => {
     window.open("https://www.cowin.gov.in/home");
   };
 
+  const contactUsHandler = () => {
+    window.open();
+  }
+
+  const linkedInRedirectHandler = (linkedInId) => {
+    window.open(linkedInId);
+  }
+
   const classes = useStyles();
   return (
     <Grid
@@ -72,8 +92,8 @@ const LandingPageView = (props) => {
       <Grid item xs={12} md={12} lg={12} xl={12}>
         <UserDataForm searchHandler={searchHandler} />
       </Grid>
-      <Grid item xs={12} md={12} lg={12} xl={12} className={classes.slotGrid}>
-        <Route path="/home/nextAvailableSlots">
+      <Route path="/home/nextAvailableSlots">
+        <Grid item xs={12} md={12} lg={12} xl={12} className={classes.slotGrid}>
           <AvailableSlots refreshRedults={refreshRedults} />
           <Box width="100%" display="flex" justifyContent="center">
             <Button
@@ -85,8 +105,21 @@ const LandingPageView = (props) => {
               Book your slot
             </Button>
           </Box>
-        </Route>
-      </Grid>
+       </Grid>
+      </Route>
+      {/* <Box flexGrow="1"/>
+      <Grid item xs={12} md={12} lg={12} xl={12} >
+        <Box className={classes.footer}>
+          <Box justifyContent="center" width="100%" padding="0.5rem 0" display="flex">
+            <Button variant="outlined" style={{color: 'white'}}>Contact us</Button>
+          </Box>
+          <Box width="100%" display="flex" justifyContent="space-evenly" padding="0.5rem 0">
+            <Button variant="outlined" style={{color: 'white'}} startIcon={<LinkedIn />}>Shridutt Patel</Button>
+            <Button variant="outlined" style={{color: 'white'}} startIcon={<LinkedIn />}>Khush Gandhi</Button>
+            <Button variant="outlined" style={{color: 'white'}} startIcon={<LinkedIn />}>Sagar Chauhan</Button>
+          </Box>
+        </Box>
+      </Grid> */}
     </Grid>
   );
 };

@@ -57,7 +57,7 @@ const AvailableSlots = (props) => {
       {isLoading ? <Spinner /> :
       (<Box
         overflow="auto"
-        maxHeight="58vh"
+        maxHeight="54vh"
         border="1px solid #1c4e6ba3"
         padding="0.5rem"
       >
