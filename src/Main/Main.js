@@ -27,8 +27,11 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         marginTop: 'auto',
-        '@media(max-height: 800px)': {
-            marginTop: '42.5%'
+        '@media(max-width: 720px)': {
+            marginTop: '39.5%'
+        },
+        '@media(max-width: 720px) and (max-height: 600px)': {
+            marginTop: '25%'
         }
     },
     btn: {
@@ -41,6 +44,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Main(props) {
     const classes = useStyles();
+
+    const contactUsHandler = () => {
+        window.open('mailto:vaccinenotifier.info@gmail.com');
+      }
+    
+      const linkedInRedirectHandler = (linkedInId) => {
+        window.open(linkedInId);
+      }
 
     const routes = (
         <Switch>
@@ -58,12 +69,12 @@ function Main(props) {
                 {routes}
                 <Box className={classes.footer}>
                 <Box justifyContent="center" width="100%" padding="0.5rem 0" display="flex">
-                    <Button variant="outlined" style={{color: 'white', border: '1px solid white'}} startIcon={<MailOutline />}>Contact us</Button>
+                    <Button onClick={contactUsHandler} variant="outlined" style={{color: 'white', border: '1px solid white'}} startIcon={<MailOutline />}>Contact us</Button>
                 </Box>
                 <Box width="100%" display="flex" justifyContent="space-evenly" padding="0.5rem 0">
-                    <Button className={classes.btn} variant="outlined" style={{color: 'white'}} startIcon={<LinkedIn />}>Shridutt Patel</Button>
-                    <Button className={classes.btn} variant="outlined" style={{color: 'white'}} startIcon={<LinkedIn />}>Khush Gandhi</Button>
-                    <Button className={classes.btn} variant="outlined" style={{color: 'white'}} startIcon={<LinkedIn />}>Sagar Chauhan</Button>
+                    <Button onClick={() => linkedInRedirectHandler('https://www.linkedin.com/in/shridutt-patel-623b6210b/')} className={classes.btn} variant="outlined" style={{color: 'white'}} startIcon={<LinkedIn />}>Shridutt Patel</Button>
+                    <Button onClick={() => linkedInRedirectHandler('https://www.linkedin.com/in/khush-gandhi-a86b62211')} className={classes.btn} variant="outlined" style={{color: 'white'}} startIcon={<LinkedIn />}>Khush Gandhi</Button>
+                    <Button onClick={() => linkedInRedirectHandler('https://www.linkedin.com/in/sagar-chauhan-586783109/')} className={classes.btn} variant="outlined" style={{color: 'white'}} startIcon={<LinkedIn />}>Sagar Chauhan</Button>
                 </Box>
                 </Box>
             </main>

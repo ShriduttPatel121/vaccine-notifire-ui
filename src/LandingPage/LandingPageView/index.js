@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Grid, Button, Box, Typography } from "@material-ui/core";
+import { Grid, Button, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { Route } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { LinkedIn } from '@material-ui/icons';
 
 import UserDataForm from "./UserDataForm";
 import AvailableSlots from "./AvailableSlots";
@@ -23,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     padding: theme.spacing(1),
     "@media(max-width: 700px)": {
-      maxHeight: "40vh",
+      maxHeight: "50vh",
     },
 
     // maxHeight: '500px',
@@ -72,14 +71,6 @@ const LandingPageView = (props) => {
   const slotBookHandler = () => {
     window.open("https://www.cowin.gov.in/home");
   };
-
-  const contactUsHandler = () => {
-    window.open();
-  }
-
-  const linkedInRedirectHandler = (linkedInId) => {
-    window.open(linkedInId);
-  }
 
   const classes = useStyles();
   return (
